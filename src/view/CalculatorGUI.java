@@ -19,67 +19,67 @@ public class CalculatorGUI implements CalculatorGUIInterface {
 	
 	private CalculatorControler controller;
 	
-	//Création des labels pour l'affichage de l'accumulateur et des 4 derniers nombre en mémoire
+	// Labels for the accumulator display and the 4 most recent stack elements
 	private Label accuLabel = new Label();
-	private Label pile4thLastElement = new Label();
-	private Label pile3rdLastElement = new Label();
-	private Label pile2ndLastElement = new Label();
-	private Label pileLastElementLabel = new Label();
+	private Label stack4thLastElement = new Label();
+	private Label stack3rdLastElement = new Label();
+	private Label stack2ndLastElement = new Label();
+	private Label stackLastElementLabel = new Label();
 	
-	//Création d'une liste qui contiendra tous les boutons de la calculatrice
+	// List containing all calculator buttons
 	private List<Button> buttonsList = new ArrayList<>();
 	
 	/**
-     * Constructeur de l'interface graphique de la calculatrice
-     */
+	 * Constructor for the calculator GUI
+	 */
 	public CalculatorGUI(Stage primaryStage) {
 		controller = new CalculatorControler(this);
 		
-		//Définition du titre
-		primaryStage.setTitle("Calculatrice RPN Noam & Romain");
+		// Set window title
+		primaryStage.setTitle("RPN Calculator — Noam & Romain");
 		
-		//Création de la grile pour organiser la disposition des boutons et des labels
-		//avec un contour et des espaces entre les cases de 10 pixels, et un fond noir
+		// Create grid layout for buttons and labels
+		// with 10px padding and gaps, black background
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setStyle("-fx-background-color: black;");
 		
-		//Création et parametrage du label pour afficher l'accumulateur
+		// Create and configure the accumulator label
         accuLabel.setFont(new Font(25));
         accuLabel.setTextFill(Color.GRAY);
         accuLabel.setMaxWidth(Double.MAX_VALUE);
         accuLabel.setAlignment(Pos.CENTER_RIGHT);
-        grid.add(accuLabel, 1, 4, 3, 1); //Positionnement sur la 5ème ligne, sur les 3 colonnes de largeur
+        grid.add(accuLabel, 1, 4, 3, 1); // Positioned on row 5, spanning 3 columns
 
-        //Création et parametrage des labels pour afficher les 4 derniers élements de la pile
-        //On place le dernier élement empilé au plus bas et on remonte
-        pileLastElementLabel.setFont(new Font(30));
-        pileLastElementLabel.setTextFill(Color.WHITE);
-        pileLastElementLabel.setMaxWidth(Double.MAX_VALUE);
-        pileLastElementLabel.setAlignment(Pos.CENTER_RIGHT);
-        grid.add(pileLastElementLabel, 1, 3, 3, 1);
+        // Create and configure labels for the last 4 stack elements
+        // The most recently pushed element is displayed at the bottom
+        stackLastElementLabel.setFont(new Font(30));
+        stackLastElementLabel.setTextFill(Color.WHITE);
+        stackLastElementLabel.setMaxWidth(Double.MAX_VALUE);
+        stackLastElementLabel.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(stackLastElementLabel, 1, 3, 3, 1);
         
-        pile2ndLastElement.setFont(new Font(25));
-        pile2ndLastElement.setTextFill(Color.WHITE);
-        pile2ndLastElement.setMaxWidth(Double.MAX_VALUE);
-        pile2ndLastElement.setAlignment(Pos.CENTER_RIGHT);
-        grid.add(pile2ndLastElement, 1, 2, 3, 1);
+        stack2ndLastElement.setFont(new Font(25));
+        stack2ndLastElement.setTextFill(Color.WHITE);
+        stack2ndLastElement.setMaxWidth(Double.MAX_VALUE);
+        stack2ndLastElement.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(stack2ndLastElement, 1, 2, 3, 1);
         
-        pile3rdLastElement.setFont(new Font(25));
-        pile3rdLastElement.setTextFill(Color.WHITE);
-        pile3rdLastElement.setMaxWidth(Double.MAX_VALUE);
-        pile3rdLastElement.setAlignment(Pos.CENTER_RIGHT);
-        grid.add(pile3rdLastElement, 1, 1, 3, 1);
+        stack3rdLastElement.setFont(new Font(25));
+        stack3rdLastElement.setTextFill(Color.WHITE);
+        stack3rdLastElement.setMaxWidth(Double.MAX_VALUE);
+        stack3rdLastElement.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(stack3rdLastElement, 1, 1, 3, 1);
         
-        pile4thLastElement.setFont(new Font(25));
-        pile4thLastElement.setTextFill(Color.WHITE);
-        pile4thLastElement.setMaxWidth(Double.MAX_VALUE);
-        pile4thLastElement.setAlignment(Pos.CENTER_RIGHT);
-        grid.add(pile4thLastElement, 1, 0, 3, 1);
+        stack4thLastElement.setFont(new Font(25));
+        stack4thLastElement.setTextFill(Color.WHITE);
+        stack4thLastElement.setMaxWidth(Double.MAX_VALUE);
+        stack4thLastElement.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(stack4thLastElement, 1, 0, 3, 1);
         
-        //Création d'une liste avec les noms des boutons
+        // Button labels
         String[] labels = {"C", "+/-", "swap",   "/",
                 		   "7",   "8",    "9",   "x",
                 		   "4",   "5",    "6",   "-",
@@ -87,7 +87,7 @@ public class CalculatorGUI implements CalculatorGUIInterface {
                 		   "0",           ".", "push",
                 		   "⌫", "drop"};
         
-        //Création des boutons et parametrage de leur taille et de la police d'écriture et ajout du controller en écouteur
+        // Create buttons with size, font, and attach controller as listener
         for (String label : labels) {
             Button button = new Button(label);
             button.setFont(new Font(20));
@@ -96,41 +96,41 @@ public class CalculatorGUI implements CalculatorGUIInterface {
             button.setOnAction(e -> controller.handle(e));
         }
 		
-        //Ajout des boutons à la grille
-        //Première ligne de bouton
+        // Add buttons to grid
+        // First row
         grid.add(buttonsList.get(0), 0, 5);
         grid.add(buttonsList.get(1), 1, 5);
         grid.add(buttonsList.get(2), 2, 5);
         grid.add(buttonsList.get(3), 3, 5);
         
-        //Seconde ligne de bouton
+        // Second row
         grid.add(buttonsList.get(4), 0, 6);
         grid.add(buttonsList.get(5), 1, 6);
         grid.add(buttonsList.get(6), 2, 6);
         grid.add(buttonsList.get(7), 3, 6);
         
-        //Troisième ligne de bouton
+        // Third row
         grid.add(buttonsList.get(8), 0, 7);
         grid.add(buttonsList.get(9), 1, 7);
         grid.add(buttonsList.get(10), 2, 7);
         grid.add(buttonsList.get(11), 3, 7);
         
-        //Quatrième ligne de bouton
+        // Fourth row
         grid.add(buttonsList.get(12), 0, 8);
         grid.add(buttonsList.get(13), 1, 8);
         grid.add(buttonsList.get(14), 2, 8);
         grid.add(buttonsList.get(15), 3, 8);
         
-        //Cinquième ligne de bouton
-        grid.add(buttonsList.get(16), 0, 9, 2, 1); //Le bouton 0 fait 2 case de largeur
+        // Fifth row
+        grid.add(buttonsList.get(16), 0, 9, 2, 1); // Button 0 spans 2 columns
         grid.add(buttonsList.get(17), 2, 9);
         grid.add(buttonsList.get(18), 3, 9);
         
-        //Boutons spéciaux ligne de bouton
+        // Special buttons row
         grid.add(buttonsList.get(19), 0, 4);
         grid.add(buttonsList.get(20), 0, 3);
 
-        //Paramétrages spécifiques aux groupes de boutons (couleurs)
+        // Group-specific button styling (colors)
         buttonsList.forEach(button -> {
             String label = button.getText();
             if ("C +/- swap / x - + push".contains(label)) {
@@ -147,7 +147,7 @@ public class CalculatorGUI implements CalculatorGUIInterface {
             } else if (label.equals("drop")) {
             	button.setVisible(false);
             	button.setStyle("-fx-background-color: #d3d3d3; -fx-text-fill: black;");
-            	pileLastElementLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            	stackLastElementLabel.textProperty().addListener((observable, oldValue, newValue) -> {
 		            button.setVisible(!newValue.isEmpty());
 		        });
             } else {
@@ -155,47 +155,46 @@ public class CalculatorGUI implements CalculatorGUIInterface {
             }
         });
 		
-        //Création de la scène et ajout du controleur en écouteur des boutons claviers pressés
+        // Create scene and attach controller as keyboard listener
         Scene scene = new Scene(grid, 350, 550);
         scene.setOnKeyPressed(controller::handleKeyPress);
         
-        //Ajout de la scène au stage de JavaFX et lancement de l'affichage
+        // Set scene on stage and show
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
 	/**
-     * Méthode pour modifier la chaine de caractère du label de l'accumulateur
-     * @param String string, chaine de caractère que l'on souhaite afficher
-     */
+	 * Sets the accumulator label text
+	 * @param string the text to display
+	 */
 	@Override
 	public void setAccuLabel(String string) {
 		this.accuLabel.setText(string);
 	}
 
 	/**
-     * Méthode pour prélever et modifier les valeurs des 4 derniers élements à partir de la pile
-     * @param List<Double> stackData, pile que l'on souhaite afficher
-     */
+	 * Updates the 4 stack display labels from the current stack state
+	 * @param stackData the stack to display
+	 */
 	@Override
-	public void setPileLabels(List<Double> stackData) {
+	public void setStackLabels(List<Double> stackData) {
 		int size = stackData.size();
-		this.pileLastElementLabel.setText("");	
-		this.pile2ndLastElement.setText("");
-		this.pile3rdLastElement.setText("");
-		this.pile4thLastElement.setText("");
+		this.stackLastElementLabel.setText("");	
+		this.stack2ndLastElement.setText("");
+		this.stack3rdLastElement.setText("");
+		this.stack4thLastElement.setText("");
 		if(size > 3) {
-			this.pile4thLastElement.setText(String.valueOf(stackData.get(size-4)));	
+			this.stack4thLastElement.setText(String.valueOf(stackData.get(size-4)));	
 		} 
 		if(size > 2) {
-			this.pile3rdLastElement.setText(String.valueOf(stackData.get(size-3)));
+			this.stack3rdLastElement.setText(String.valueOf(stackData.get(size-3)));
 		}
 		if(size > 1) {
-			this.pile2ndLastElement.setText(String.valueOf(stackData.get(size-2)));	
+			this.stack2ndLastElement.setText(String.valueOf(stackData.get(size-2)));	
 		}
 		if(size > 0) {
-			this.pileLastElementLabel.setText(String.valueOf(stackData.get(size-1)));
+			this.stackLastElementLabel.setText(String.valueOf(stackData.get(size-1)));
 		}
 	}
 }
-

@@ -10,13 +10,13 @@ import view.CalculatorGUI;
 
 public class CalculatorControler implements EventHandler<ActionEvent>, CalculatorControlerInterface {
 
-	//Le controller connait le gui et un model
+	// The controller knows the GUI and a model
 	private CalculatorGUI gui;
     private CalculatorModelInterface model = new CalculatorModel();
     
     /**
-     * Constructeur du controller
-     * @param CalculatorGUI gui
+     * Controller constructor
+     * @param gui the calculator GUI
      */
     public CalculatorControler(CalculatorGUI gui) 
     {
@@ -24,61 +24,61 @@ public class CalculatorControler implements EventHandler<ActionEvent>, Calculato
     }
     
     /**
-     * Ecouteur des boutons du GUI
-     * @param ActionEvent event
+     * Button click event listener
+     * @param event the action event from a button click
      */
 	@Override
 	public void handle(ActionEvent event) {
 		Object source = event.getSource();
     	if (source instanceof Button) {
     	    Button b = (Button) source;
-    	    String text = b.getText(); //On récupère le nom du bouton cliqué
+    	    String text = b.getText(); // Get the clicked button's label
 
-    	    //En fonction du bouton cliqué, on appelle la méthode correspondante du model
-    	    //puis on actualise les labels du gui dont les valeurs ont changées, via les méthodes refresh
+    	    // Based on the clicked button, call the corresponding model method
+    	    // then refresh the GUI labels whose values have changed
 	    	switch (text) {
 	    		case "push":
 	    			model.push();
-	                refreshPile();
+	                refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "+":
 	    			model.add();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "-":
 	    			model.substract();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "x":
 	    			model.multiply();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "/":
 	    			model.divide();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "swap":
 	    			model.swap();
-	    			refreshPile();
+	    			refreshStack();
 	                break;
 	    		case "C":
 	    			model.clear();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "+/-":
 	    			model.opposite();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "drop":
 	    			model.drop();
-	    			refreshPile();
+	    			refreshStack();
 	                refreshAccu();
 	                break;
 	    		case "⌫":
@@ -94,11 +94,11 @@ public class CalculatorControler implements EventHandler<ActionEvent>, Calculato
 	}
 	
 	/**
-     * Ecouteur des boutons du clavier
-     * Les touches sont +, -, *, /, p pout push, c pour clear, o pour opposite, d pour drop, s pour swap et backspace pour effacer
-     * et les chiffres de 0 à 9 ainsi que le . pour la virgule
-     * @param KeyEvent event
-     */
+	 * Keyboard key press event listener
+	 * Keys: +, -, *, /, p for push, c for clear, o for opposite, d for drop, s for swap,
+	 * backspace to delete, and digits 0-9 plus . for decimal
+	 * @param event the key event
+	 */
 	public void handleKeyPress(KeyEvent event) {
         switch (event.getText()) {
             case "0":
@@ -147,47 +147,47 @@ public class CalculatorControler implements EventHandler<ActionEvent>, Calculato
                 break;
             case "+":
             	model.add();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "-":
             	model.substract();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "*":
             	model.multiply();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "/":
             	model.divide();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "p": case "P":
             	model.push();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "c": case "C":
             	model.clear();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "o": case "O":
             	model.opposite();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "d": case "D":
             	model.drop();
-    			refreshPile();
+    			refreshStack();
                 refreshAccu();
                 break;
             case "s": case "S":
             	model.swap();
-    			refreshPile();
+    			refreshStack();
                 break;
             default:
                 break;
@@ -203,20 +203,20 @@ public class CalculatorControler implements EventHandler<ActionEvent>, Calculato
     } 
 
 	/**
-     * Méthode pour actualiser ll'affichage de l'accumulateur
-     * On récupere la valeur de l'accumulateur dans le model et on set le label correspondant dans le gui
-     */
+	 * Refreshes the accumulator display
+	 * Gets the accumulator value from the model and updates the GUI label
+	 */
 	@Override
 	public void refreshAccu() {
         gui.setAccuLabel(model.getAccu());
     }
 	
 	/**
-     * Méthode pour actualiser l'affichage de la pile
-     * On récupere la pile dans le model et on envoie les valeurs à la méthode set du gui
-     */
+	 * Refreshes the stack display
+	 * Gets the stack from the model and updates the GUI labels
+	 */
 	@Override
-	public void refreshPile() {
-        gui.setPileLabels(model.getPile());
+	public void refreshStack() {
+        gui.setStackLabels(model.getStack());
     }
 }

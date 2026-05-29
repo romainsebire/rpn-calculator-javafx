@@ -5,10 +5,10 @@ import java.util.Stack;
 public interface CalculatorModelInterface {
 	
 	public void setAccu(String accu);
-    public String getAccu();
-    public void setPile(Stack<Double> pile);
-    public Stack<Double> getPile();
-    
+	public String getAccu();
+	public void setStack(Stack<Double> stack);
+	public Stack<Double> getStack();
+	
 	public void add();
 	public void substract();
 	public void multiply();

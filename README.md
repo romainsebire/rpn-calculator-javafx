@@ -1,136 +1,136 @@
-# 🔢 Calculatrice RPN — JavaFX
+# 🔢 RPN Calculator — JavaFX
 
-Une calculatrice en **Notation Polonaise Inverse** (RPN) développée en Java avec **JavaFX**, suivant l'architecture **MVC**.
+A **Reverse Polish Notation** (RPN) calculator built in Java with **JavaFX**, following the **MVC** architecture pattern.
 
-> **Projet réalisé par** Noam GREA & Romain SEBIRE — IMT Mines Alès
+> **Built by** Noam GREA & Romain SEBIRE — IMT Mines Alès
 
 ---
 
 ## 📖 Description
 
-Cette calculatrice fonctionne selon le principe de la **Notation Polonaise Inverse** (Reverse Polish Notation), similaire aux calculatrices HP. L'utilisateur saisit d'abord les opérandes, puis applique les opérateurs. Les valeurs sont gérées via une **pile** (stack).
+This calculator uses **Reverse Polish Notation** (postfix notation), similar to HP calculators. Users enter operands first, then apply operators. Values are managed through a **stack** (LIFO data structure).
 
-### Fonctionnalités
+### Features
 
-| Fonction | Bouton | Clavier | Description |
-|----------|--------|---------|-------------|
-| Chiffres | `0`-`9`, `.` | `0`-`9`, `.` | Saisie dans l'accumulateur |
-| Push | `push` | `P` | Empile la valeur de l'accumulateur |
-| Addition | `+` | `+` | Dépile deux valeurs, empile la somme |
-| Soustraction | `-` | `-` | Dépile deux valeurs, empile la différence |
-| Multiplication | `x` | `*` | Dépile deux valeurs, empile le produit |
-| Division | `/` | `/` | Dépile deux valeurs, empile le quotient (protection division par zéro) |
-| Opposé | `+/-` | `O` | Inverse le signe du sommet de pile |
-| Swap | `swap` | `S` | Échange les deux éléments du sommet |
-| Drop | `drop` | `D` | Supprime le sommet de pile |
-| Clear | `C` | `C` | Vide la pile et l'accumulateur |
-| Retour arrière | `⌫` | `Backspace` | Supprime le dernier caractère saisi |
+| Function | Button | Keyboard | Description |
+|----------|--------|----------|-------------|
+| Digits | `0`-`9`, `.` | `0`-`9`, `.` | Input into the accumulator |
+| Push | `push` | `P` | Pushes accumulator value onto the stack |
+| Addition | `+` | `+` | Pops two values, pushes the sum |
+| Subtraction | `-` | `-` | Pops two values, pushes the difference |
+| Multiplication | `x` | `*` | Pops two values, pushes the product |
+| Division | `/` | `/` | Pops two values, pushes the quotient (divide-by-zero protection) |
+| Opposite | `+/-` | `O` | Negates the top of stack |
+| Swap | `swap` | `S` | Swaps the two top stack elements |
+| Drop | `drop` | `D` | Removes the top stack element |
+| Clear | `C` | `C` | Clears both stack and accumulator |
+| Backspace | `⌫` | `Backspace` | Removes the last typed character |
 
-### Exemple d'utilisation
+### Usage Example
 
-Pour calculer `(3 + 4) × 2` :
-1. Tapez `3`, appuyez sur `push`
-2. Tapez `4`, appuyez sur `+` → La pile affiche `7.0`
-3. Tapez `2`, appuyez sur `x` → La pile affiche `14.0`
+To compute `(3 + 4) × 2`:
+1. Type `3`, press `push`
+2. Type `4`, press `+` → Stack shows `7.0`
+3. Type `2`, press `x` → Stack shows `14.0`
 
 ---
 
-## 🏗️ Architecture MVC
+## 🏗️ MVC Architecture
 
 ```
 src/
-├── module-info.java                          # Module JPMS
+├── module-info.java                          # JPMS module descriptor
 ├── application/
-│   └── Main.java                             # Point d'entrée JavaFX
+│   └── Main.java                             # JavaFX entry point
 ├── model/
-│   ├── CalculatorModelInterface.java         # Interface du modèle
-│   └── CalculatorModel.java                  # Logique métier (pile + accumulateur)
+│   ├── CalculatorModelInterface.java         # Model interface
+│   └── CalculatorModel.java                  # Business logic (stack + accumulator)
 ├── view/
-│   ├── CalculatorGUIInterface.java           # Interface de la vue
-│   └── CalculatorGUI.java                    # Interface graphique JavaFX
+│   ├── CalculatorGUIInterface.java           # View interface
+│   └── CalculatorGUI.java                    # JavaFX graphical interface
 └── controller/
-    ├── CalculatorControlerInterface.java      # Interface du contrôleur
-    └── CalculatorControler.java               # Gestion des événements
+    ├── CalculatorControlerInterface.java      # Controller interface
+    └── CalculatorControler.java               # Event handling
 ```
 
 ```mermaid
 graph LR
-    V[Vue — CalculatorGUI] -->|événements utilisateur| C[Contrôleur — CalculatorControler]
-    C -->|opérations| M[Modèle — CalculatorModel]
-    C -->|refreshAccu / refreshPile| V
-    M -->|getAccu / getPile| C
+    V[View — CalculatorGUI] -->|user events| C[Controller — CalculatorControler]
+    C -->|operations| M[Model — CalculatorModel]
+    C -->|refreshAccu / refreshStack| V
+    M -->|getAccu / getStack| C
 ```
 
-- **Modèle** : Logique pure — gère l'accumulateur (`String`) et la pile (`Stack<Double>`). Aucune dépendance UI.
-- **Vue** : Interface JavaFX — boutons, labels, mise en page avec `GridPane`. Délègue tous les événements au contrôleur.
-- **Contrôleur** : Pont entre vue et modèle. Gère les clics boutons (`ActionEvent`) et les entrées clavier (`KeyEvent`).
+- **Model**: Pure business logic — manages the accumulator (`String`) and the stack (`Stack<Double>`). No UI dependencies.
+- **View**: JavaFX UI — buttons, labels, layout with `GridPane`. Delegates all events to the controller.
+- **Controller**: Bridge between view and model. Handles button clicks (`ActionEvent`) and keyboard input (`KeyEvent`).
 
-Chaque couche est abstraite par une **interface** Java pour un couplage faible.
+Each layer is abstracted by a Java **interface** for loose coupling.
 
 ---
 
 ## 🛠️ Technologies
 
-| Composant | Technologie |
-|-----------|-------------|
-| Langage | **Java 21+** |
-| Interface graphique | **JavaFX** (`javafx.controls`, `javafx.graphics`) |
-| Mise en page | `GridPane` avec style CSS inline |
-| Système de modules | **JPMS** (`module-info.java`) |
-| Pattern | **MVC** avec interfaces |
+| Component | Technology |
+|-----------|------------|
+| Language | **Java 21+** |
+| GUI framework | **JavaFX** (`javafx.controls`, `javafx.graphics`) |
+| Layout | `GridPane` with inline CSS styling |
+| Module system | **JPMS** (`module-info.java`) |
+| Pattern | **MVC** with interfaces |
 
 ---
 
-## 🚀 Prérequis & Exécution
+## 🚀 Prerequisites & Running
 
-### Prérequis
+### Prerequisites
 
-- **Java JDK 21+** (utilise `SequencedCollection.getLast()`)
-- **JavaFX SDK 21+** (séparé du JDK depuis Java 11)
+- **Java JDK 21+** (uses `SequencedCollection.getLast()`)
+- **JavaFX SDK 21+** (separate from JDK since Java 11)
 
-### Exécution
+### Running
 
 ```bash
-# Télécharger JavaFX SDK depuis https://openjfx.io/
+# Download JavaFX SDK from https://openjfx.io/
 
-# Compiler
+# Compile
 javac --module-path /path/to/javafx-sdk/lib \
       --add-modules javafx.controls,javafx.graphics \
       -d out $(find src -name "*.java")
 
-# Exécuter
+# Run
 java --module-path /path/to/javafx-sdk/lib \
      --add-modules javafx.controls,javafx.graphics \
      -cp out application.Main
 ```
 
-Ou via **Eclipse** avec le plugin **e(fx)clipse** : ouvrir le projet et exécuter `Main.java`.
+Or via **Eclipse** with the **e(fx)clipse** plugin: open the project and run `Main.java`.
 
 ---
 
 ## 🎨 Interface
 
-L'interface présente :
-- Un **écran noir** avec affichage des 4 derniers éléments de la pile en blanc
-- L'**accumulateur** (valeur en cours de saisie) en gris
-- Des **boutons colorés** : opérations en orange, chiffres en gris
-- Support complet du **clavier** pour une utilisation rapide
+The interface features:
+- A **black screen** displaying the 4 most recent stack elements in white
+- The **accumulator** (current input) in gray
+- **Colored buttons**: operations in orange, digits in gray
+- Full **keyboard support** for fast usage
 
 ---
 
-## 📚 Concepts Java démontrés
+## 📚 Java Concepts Demonstrated
 
-- Architecture **MVC** avec séparation stricte des responsabilités
-- **Interfaces Java** pour l'abstraction des couches
-- **JavaFX** : `Application`, `Stage`, `Scene`, `GridPane`, `Button`, `Label`
-- **Gestion d'événements** : `EventHandler<ActionEvent>`, `KeyEvent`
-- **Generics** : `Stack<Double>`
-- **Système de modules JPMS** (`module-info.java`)
-- Pattern **Observer** implicite (contrôleur rafraîchit la vue après chaque opération)
-- **Notation Polonaise Inverse** — structure de données pile (LIFO)
+- **MVC** architecture with strict separation of concerns
+- **Java interfaces** for layer abstraction
+- **JavaFX**: `Application`, `Stage`, `Scene`, `GridPane`, `Button`, `Label`
+- **Event handling**: `EventHandler<ActionEvent>`, `KeyEvent`
+- **Generics**: `Stack<Double>`
+- **JPMS module system** (`module-info.java`)
+- Implicit **Observer pattern** (controller refreshes view after each operation)
+- **Reverse Polish Notation** — stack (LIFO) data structure
 
 ---
 
-## 📝 Licence
+## 📝 License
 
-Projet académique — IMT Mines Alès.
+Academic project — IMT Mines Alès.
