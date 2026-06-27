@@ -1,4 +1,4 @@
-# 🔢 RPN Calculator — JavaFX
+# RPN Calculator — JavaFX
 
 A **Reverse Polish Notation** (RPN) calculator built in Java with **JavaFX**, following the **MVC** architecture pattern.
 
@@ -6,7 +6,13 @@ A **Reverse Polish Notation** (RPN) calculator built in Java with **JavaFX**, fo
 
 ---
 
-## 📖 Description
+## Demo Video
+
+https://github.com/user-attachments/assets/3f1e05e4-285f-41ec-8995-93b09673e9c2
+
+---
+
+## Description
 
 This calculator uses **Reverse Polish Notation** (postfix notation), similar to HP calculators. Users enter operands first, then apply operators. Values are managed through a **stack** (LIFO data structure).
 
@@ -35,7 +41,7 @@ To compute `(3 + 4) × 2`:
 
 ---
 
-## 🏗️ MVC Architecture
+## MVC Architecture
 
 ```
 src/
@@ -69,7 +75,7 @@ Each layer is abstracted by a Java **interface** for loose coupling.
 
 ---
 
-## 🛠️ Technologies
+## Technologies
 
 | Component | Technology |
 |-----------|------------|
@@ -81,7 +87,7 @@ Each layer is abstracted by a Java **interface** for loose coupling.
 
 ---
 
-## 🚀 Prerequisites & Running
+## Prerequisites & Running
 
 ### Prerequisites
 
@@ -108,7 +114,7 @@ Or via **Eclipse** with the **e(fx)clipse** plugin: open the project and run `Ma
 
 ---
 
-## 🎨 Interface
+## Interface
 
 The interface features:
 - A **black screen** displaying the 4 most recent stack elements in white
@@ -118,7 +124,7 @@ The interface features:
 
 ---
 
-## 📚 Java Concepts Demonstrated
+## Java Concepts Demonstrated
 
 - **MVC** architecture with strict separation of concerns
 - **Java interfaces** for layer abstraction
@@ -131,6 +137,6 @@ The interface features:
 
 ---
 
-## 📝 License
+## License
 
 Academic project — IMT Mines Alès.
